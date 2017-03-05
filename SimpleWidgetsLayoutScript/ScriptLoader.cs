@@ -11,16 +11,17 @@ namespace SimpleWidgetsLayoutScript
     {
         public static WrapperResult LoadFromString(string scriptText)
         {
-            return null;//todo
+            ScriptParser parser = new ScriptParser(scriptText);
+            return parser.parse();
         }
 
         public static WrapperResult LoadFromFile(string filePath)
         {
-            try
-            {
+            //try
+            //{
                 return LoadFromString(File.ReadAllText(filePath));
-            }
-            catch { return null; }
+            //}
+            //catch { return null; }
         }
     }
 }

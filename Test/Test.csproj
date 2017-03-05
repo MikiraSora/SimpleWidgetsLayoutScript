@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C2F92B39-A449-4CE9-8817-21E32DE88657}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleWidgetsLayoutScript</RootNamespace>
-    <AssemblyName>SimpleWidgetsLayoutScript</AssemblyName>
+    <ProjectGuid>{78525B5A-A0C3-4CD9-8460-DA7431941578}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Test</RootNamespace>
+    <AssemblyName>Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +22,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BaseCalculator">
-      <HintPath>..\..\BaseCalculator\BaseCalculator\bin\Debug\BaseCalculator.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,13 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScriptLoader.cs" />
-    <Compile Include="ScriptParser.cs" />
-    <Compile Include="Types\ElementBase.cs" />
-    <Compile Include="Types\SynatxErrorException.cs" />
-    <Compile Include="WrapperResult.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleWidgetsLayoutScript\SimpleWidgetsLayoutScript.csproj">
+      <Project>{c2f92b39-a449-4ce9-8817-21e32de88657}</Project>
+      <Name>SimpleWidgetsLayoutScript</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,7 +8,7 @@ namespace SimpleWidgetsLayoutScript
 {
     public class WrapperResult
     {
-        List<ElementBase> Element { get; set; }
+        public List<ElementBase> Element { get; set; }
 
         public WrapperResult()
         {

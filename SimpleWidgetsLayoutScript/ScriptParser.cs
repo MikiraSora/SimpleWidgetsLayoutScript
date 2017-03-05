@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleWidgetsLayoutScript
 {
-    class ScriptParser
+    internal class ScriptParser
     {
         string _scriptText=null;
 
@@ -17,7 +17,7 @@ namespace SimpleWidgetsLayoutScript
             return elementParentStack.Count == 0 ? null : elementParentStack.Peek();
         }
 
-        ScriptParser(string scriptText)
+        public ScriptParser(string scriptText)
         {
             _scriptText = scriptText;
         }
@@ -26,34 +26,41 @@ namespace SimpleWidgetsLayoutScript
         {
             if (_scriptText == null)
                 return null;
+#if DEBUG
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Raw:>\n{0}", _scriptText);
+            Console.ResetColor();
+#endif
+            _scriptText = deleteCommentText();
+
+            //fix special char
+            _scriptText = _scriptText.Replace("\r\n", "\n").Replace("\t", string.Empty).Replace("\n\n", "\n");
 
             int position = -1;
             char ch = (char)0;
-            char prev_char=(char)0;
 
             WrapperResult elementResult = new WrapperResult();
 
             ElementBase currentElement = null,element;
+
+#if DEBUG
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("DeleteComments:>\n{0}", _scriptText);
+            Console.ResetColor();
+            string AccessedString = "";
+#endif
 
             while (true)
             {
                 position++;
                 if (position >= _scriptText.Length)
                     break;
-                prev_char = ch;
+
                 ch = _scriptText[position];
 
-                if (ch == '/' && prev_char == '/')
-                {
-                    skipSingleLineComment(ref position);
-                    continue;
-                }
-
-                if (ch == '/' && prev_char == '*')
-                {
-                    skipRangeComment(ref position);
-                    continue;
-                }
+#if DEBUG
+                AccessedString += ch;
+#endif
 
                 if (ch == '[')
                 {
@@ -66,6 +73,9 @@ namespace SimpleWidgetsLayoutScript
                     element.ParentElement = getCurrentParantElement();
 
                     currentElement = element;
+
+                    if (element.ParentElement == null)
+                        elementResult.Element.Add(element);
                 }
 
                 if (ch == '{')
@@ -82,17 +92,64 @@ namespace SimpleWidgetsLayoutScript
             return elementResult;
         }
 
+        string deleteCommentText()
+        {
+            int position = -1;
+            char ch = (char)0;
+            char prev_ch = (char)0;
+
+            string result = "";
+
+            bool isStringSelecting = false;
+
+            while (true)
+            {
+                position++;
+                if (position >= _scriptText.Length)
+                    break;
+
+                prev_ch = ch;
+                ch = _scriptText[position];
+
+                if(ch=='"')
+                {
+                    if (prev_ch != '/')
+                        isStringSelecting = !isStringSelecting;
+                }
+
+                if (ch == '/' && prev_ch =='/'&&(!isStringSelecting))
+                {
+                    skipSingleLineComment(ref position);
+                    if(result.Length!=0)
+                        result=result.Remove(result.Length-1);
+                    continue;
+                }
+
+                if(ch == '*' && prev_ch == '/' && (!isStringSelecting))
+                {
+                    skipRangeComment(ref position);
+                    if (result.Length != 0)
+                        result =result.Remove(result.Length - 1);
+                    continue;
+                }
+
+                result += ch;
+            }
+
+            return result;
+        }
+
         ElementBase parseSelectElementText(ref string text)
         {
             ElementBase element = new ElementBase();
             Stack<int> balanceBracket = new Stack<int>();
             Dictionary<string, object> param;
 
-            string paramText = "";
+            string paramText = "",elementName="";
 
             int position = -1;
 
-            int tmpNameStartPosition = 0;
+            int tmpStartPosition = 0;
 
             char ch;
 
@@ -106,7 +163,7 @@ namespace SimpleWidgetsLayoutScript
                 //start to select name
                 if (ch == ':')
                 {
-                    tmpNameStartPosition = position;
+                    tmpStartPosition = position;
 
                     while (true)
                     {
@@ -119,7 +176,7 @@ namespace SimpleWidgetsLayoutScript
                         if (ch == '(')
                         {
                             //sub element name 
-                            element.ElementName = text.Substring(tmpNameStartPosition+1,position);
+                            element.ElementName = /*text.Substring(tmpStartPosition + 1,position);*/elementName.Trim('"');
 
                             while (true)
                             {
@@ -139,7 +196,7 @@ namespace SimpleWidgetsLayoutScript
                                         balanceBracket.Pop();
                                 }
 
-                                if (ch == ')')
+                                if (ch == '(')
                                 {
                                     balanceBracket.Push(position);
                                 }
@@ -148,6 +205,9 @@ namespace SimpleWidgetsLayoutScript
                             }
                             break;
                         }
+
+                        elementName += ch;
+
                     }
                     break;
                 }
@@ -215,10 +275,9 @@ namespace SimpleWidgetsLayoutScript
 
                 if (ch == ']')
                 {
+                    balanceBracket.Pop();
                     if (balanceBracket.Count == 0)
                         return stringSelectElementText;
-                    else
-                        balanceBracket.Pop();
                 }
 
                 if (ch == '[')
@@ -258,7 +317,7 @@ namespace SimpleWidgetsLayoutScript
                 prev_char = ch;
                 ch = _scriptText[position];
 
-                if (ch == '*' && prev_char == '/')
+                if (ch == '/' && prev_char == '*')
                 {
                     break;
                 }

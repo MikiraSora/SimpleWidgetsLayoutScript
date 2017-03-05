@@ -33,5 +33,10 @@ namespace SimpleWidgetsLayoutScript
             foreach (var child in ChildrenElement)
                 EnumAllChildrenElement(ref refResultList);
         }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}]\"{1}\" --->{2}",this.Type,ElementName,ParentElement==null?"<root>":ParentElement.ElementName);
+        }
     }
 }
