@@ -16,6 +16,7 @@ namespace Test
             foreach (var elementRoot in result.Element)
                 dump(elementRoot);
 
+            Console.ReadLine();
         }
 
         public static void dump(ElementBase element,int level=0)
@@ -23,8 +24,9 @@ namespace Test
             for (int i = 0; i < level; i++)
                 Console.Write("-");
             Console.Write("{0}\n", element.ToString());
+            level++;
             foreach (var child in element.ChildrenElement)
-                dump(child, level++);
+                dump(child, level);
         }
     }
 }

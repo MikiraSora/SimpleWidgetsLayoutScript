@@ -71,6 +71,8 @@ namespace SimpleWidgetsLayoutScript
 
                     //set parantElement up
                     element.ParentElement = getCurrentParantElement();
+                    if(getCurrentParantElement()!=null)
+                        element.ParentElement.ChildrenElement.Add(element);
 
                     currentElement = element;
 
@@ -143,7 +145,6 @@ namespace SimpleWidgetsLayoutScript
         {
             ElementBase element = new ElementBase();
             Stack<int> balanceBracket = new Stack<int>();
-            Dictionary<string, object> param;
 
             string paramText = "",elementName="";
 
@@ -156,9 +157,9 @@ namespace SimpleWidgetsLayoutScript
             while (true)
             {
                 position++;
-                if (position >= _scriptText.Length)
+                if (position >= text.Length)
                     break;
-                ch = _scriptText[position];
+                ch = text[position];
 
                 //start to select name
                 if (ch == ':')
@@ -168,9 +169,9 @@ namespace SimpleWidgetsLayoutScript
                     while (true)
                     {
                         position++;
-                        if (position >= _scriptText.Length)
+                        if (position >= text.Length)
                             throw new SynatxErrorException(0, position, "Miss \"(...)\" param list or \"]\"");
-                        ch = _scriptText[position];
+                        ch = text[position];
 
                         //start to parse param list
                         if (ch == '(')
@@ -181,9 +182,9 @@ namespace SimpleWidgetsLayoutScript
                             while (true)
                             {
                                 position++;
-                                if (position >= _scriptText.Length)
+                                if (position >= text.Length)
                                     throw new SynatxErrorException(balanceBracket.Peek(), position, "Miss \")\"");
-                                ch = _scriptText[position];
+                                ch = text[position];
 
                                 if (ch == ')')
                                 {
