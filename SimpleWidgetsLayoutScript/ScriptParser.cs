@@ -91,8 +91,45 @@ namespace SimpleWidgetsLayoutScript
                 }
             }
 
-            return elementResult;
+			addDefaultWidget(elementResult);
+
+			calculateElementRecursion(elementResult);
+
+			return elementResult;
         }
+
+		void _addDefaultWidgetRecursion( ElementBase element)
+		{
+			element.ElementProperties.Add("widgetName", element.ElementName);
+			element.ElementProperties.Add("widgetType", element.Type);
+			foreach (var child in element.ChildrenElement)
+			{
+				_addDefaultWidgetRecursion(child);
+			}
+		}
+
+		void calculateElementRecursion(ElementBase element)
+		{
+			PropertiesCalculator.calculate(element);
+			foreach (var child in element.ChildrenElement)
+			{
+				calculateElementRecursion(child);
+			}
+		}
+
+		void calculateElementRecursion(WrapperResult result)
+		{
+			foreach (var element in result.Element)
+				calculateElementRecursion(element);
+		}
+
+		void addDefaultWidget(WrapperResult result)
+		{
+			foreach (var element in result.Element)
+			{
+				_addDefaultWidgetRecursion(element);
+			}
+		}
 
         string deleteCommentText()
         {
@@ -177,7 +214,7 @@ namespace SimpleWidgetsLayoutScript
                         if (ch == '(')
                         {
                             //sub element name 
-                            element.ElementName = /*text.Substring(tmpStartPosition + 1,position);*/elementName.Trim('"');
+                            element.ElementName = /*text.Substring(tmpStartPosition + 1,position);*/elementName.Trim('"').Trim();
 
                             while (true)
                             {
@@ -215,7 +252,7 @@ namespace SimpleWidgetsLayoutScript
 
                 element.Type += ch;
             }
-
+			element.Type=element.Type.Trim();
             return element;
         }
         
