@@ -91,20 +91,30 @@ namespace SimpleWidgetsLayoutScript
                 }
             }
 
-			addDefaultWidget(elementResult);
-
 			calculateElementRecursion(elementResult);
+
+			fixWidgetProperties(elementResult);
 
 			return elementResult;
         }
 
-		void _addDefaultWidgetRecursion( ElementBase element)
+		void fixWidgetProperties( ElementBase element)
 		{
+			/*
+			KeyValuePair<string, object> pair;
+			for (int i = 0; i < element.ElementProperties.Count; i++)
+			{
+				pair = element.ElementProperties.ElementAt(i);
+				element.ElementProperties[pair.Key] = ((string)pair.Value).Trim('"').Trim();
+			}
+			element.ElementName = element.ElementName.Trim('"').Trim();
+			*/
+
 			element.ElementProperties.Add("widgetName", element.ElementName);
 			element.ElementProperties.Add("widgetType", element.Type);
 			foreach (var child in element.ChildrenElement)
 			{
-				_addDefaultWidgetRecursion(child);
+				fixWidgetProperties(child);
 			}
 		}
 
@@ -123,11 +133,11 @@ namespace SimpleWidgetsLayoutScript
 				calculateElementRecursion(element);
 		}
 
-		void addDefaultWidget(WrapperResult result)
+		void fixWidgetProperties(WrapperResult result)
 		{
 			foreach (var element in result.Element)
 			{
-				_addDefaultWidgetRecursion(element);
+				fixWidgetProperties(element);
 			}
 		}
 
@@ -214,7 +224,7 @@ namespace SimpleWidgetsLayoutScript
                         if (ch == '(')
                         {
                             //sub element name 
-                            element.ElementName = /*text.Substring(tmpStartPosition + 1,position);*/elementName.Trim('"').Trim();
+                            element.ElementName = /*text.Substring(tmpStartPosition + 1,position);*/elementName.Trim();
 
                             while (true)
                             {

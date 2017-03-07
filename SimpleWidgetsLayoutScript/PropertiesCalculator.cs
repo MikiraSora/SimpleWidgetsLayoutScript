@@ -39,8 +39,7 @@ namespace SimpleWidgetsLayoutScript
 					value = value.Replace(varName, varValue);
 				}
 
-				try
-				{
+				try{
 					value=(string)(element.ElementProperties[property.Key] = _calculator.Solve(value));
 				}catch { }
 				

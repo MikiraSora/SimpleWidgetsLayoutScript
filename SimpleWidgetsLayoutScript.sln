@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26020.0
+VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWidgetsLayoutScript", "SimpleWidgetsLayoutScript\SimpleWidgetsLayoutScript.csproj", "{C2F92B39-A449-4CE9-8817-21E32DE88657}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{78525B5A-A0C3-4CD9-8460-DA7431941578}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseCalculator", "..\BaseCalculator\BaseCalculator\BaseCalculator.csproj", "{6EA40255-CB2E-4BD7-815E-10E21AA93EEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{78525B5A-A0C3-4CD9-8460-DA7431941578}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78525B5A-A0C3-4CD9-8460-DA7431941578}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78525B5A-A0C3-4CD9-8460-DA7431941578}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EA40255-CB2E-4BD7-815E-10E21AA93EEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EA40255-CB2E-4BD7-815E-10E21AA93EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EA40255-CB2E-4BD7-815E-10E21AA93EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EA40255-CB2E-4BD7-815E-10E21AA93EEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
