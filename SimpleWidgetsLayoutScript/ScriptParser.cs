@@ -18,7 +18,7 @@ namespace SimpleWidgetsLayoutScript
         }
 
         public ScriptParser(string scriptText)
-        {
+        {	
             _scriptText = scriptText;
         }
 

@@ -27,6 +27,10 @@ namespace SimpleWidgetsLayoutScript
             ParentElement = null;
         }
 
+        /// <summary>
+        /// 列举此对象所有子对象
+        /// </summary>
+        /// <param name="refResultList"></param>
         public void EnumAllChildrenElement(ref List<ElementBase> refResultList) 
         {
             refResultList.Add(this);
@@ -39,6 +43,11 @@ namespace SimpleWidgetsLayoutScript
             return string.Format("[{0}]\"{1}\" --->{2}",this.Type,ElementName,ParentElement==null?"<root>":ParentElement.ElementName);
         }
 
+        /// <summary>
+        /// 获取父对象或者本对象的变量值
+        /// </summary>
+        /// <param name="varName">变量名，$开头值父对象的变量，#开头是本对象的值</param>
+        /// <returns>可直接计算的数值文本形式，如0.5,223</returns>
 		public string getCalculatableVariableValue(string varName)
 		{
 			string value,variableName=varName.Substring(1);

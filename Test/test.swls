@@ -1,0 +1,17 @@
+//the simple example of layout wrapper script
+//Power by MikiraSora(MikiraSora0409@126.com)
+//2017.3.5
+
+/*
+	Widget Define:>
+	[< TypeName >:<"WidgetName">(<PropertyName:PropertyValue>...)]
+	{
+		//(sub/child)Widget
+	}
+*/
+
+[ GameObject/*WidgetType*/:"My Tri"/*WidgetName*/(x=0,y=0,width=256,height=256,backgroundImage="Assets/tri.png")/*WidgetProperties*/]
+{
+	/*Widget ChildList*/
+	[ GameObject:"My Tri2"(x=0,y=0,angle=180,width=$width/2,height=$height/2,backgroundImage="Assets/tri.png")]
+}

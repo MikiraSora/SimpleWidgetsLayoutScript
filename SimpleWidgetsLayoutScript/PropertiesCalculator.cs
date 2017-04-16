@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SimpleWidgetsLayoutScript
 {
+    /// <summary>
+    /// 简易的计算器
+    /// </summary>
 	static class PropertiesCalculator
 	{
 		static BaseCalculator.Calculator _calculator = new BaseCalculator.Calculator();
@@ -48,6 +51,11 @@ namespace SimpleWidgetsLayoutScript
 
 		static char[] ignoreChar = { '*', '/', '+', '-', '.', '^', '%', '(', ')' };
 
+        /// <summary>
+        /// 判断文本是否为数值
+        /// </summary>
+        /// <param name="expression">表达式文本</param>
+        /// <returns></returns>
 		static bool ableDirectlyCalculate(string expression)
 		{
 			foreach (var ch in expression)
@@ -66,6 +74,12 @@ namespace SimpleWidgetsLayoutScript
 			return true;
 		}
 
+        /// <summary>
+        /// 从表达式文本中搜寻出属性变量
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <param name="_element"></param>
+        /// <returns></returns>
 		static List<String> searchAllVariable(string expression,ref ElementBase _element)
 		{
 
